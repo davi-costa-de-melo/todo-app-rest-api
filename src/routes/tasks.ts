@@ -57,7 +57,7 @@ export async function tasksRoutes(app: FastifyInstance) {
     },
     async (req, rep) => {
       const markOrUnmarkTaskAsCompletedParamsSchema = z.object({
-        id: z.string().uuid(),
+        id: z.string(),
       })
 
       const { id } = markOrUnmarkTaskAsCompletedParamsSchema.parse(req.params)
@@ -93,7 +93,7 @@ export async function tasksRoutes(app: FastifyInstance) {
     },
     async (req, rep) => {
       const deleteTaskParamsSchema = z.object({
-        id: z.string().uuid(),
+        id: z.string(),
       })
 
       const { id } = deleteTaskParamsSchema.parse(req.params)
