@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { knex } from '../database'
 import { randomUUID } from 'node:crypto'
 import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
+import { isUUID } from '../utils/is-uuid'
 
 export async function tasksRoutes(app: FastifyInstance) {
   app.get('/', async (req) => {
@@ -63,6 +64,12 @@ export async function tasksRoutes(app: FastifyInstance) {
       const { id } = markOrUnmarkTaskAsCompletedParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
 
+      if (!isUUID(id)) {
+        return rep.status(400).send({
+          message: 'id is not a valid UUID',
+        })
+      }
+
       const task = await knex('tasks')
         .where({
           id,
@@ -98,6 +105,12 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       const { id } = deleteTaskParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
+
+      if (!isUUID(id)) {
+        return rep.status(400).send({
+          message: 'id is not a valid UUID.',
+        })
+      }
 
       const task = await knex('tasks')
         .where({
