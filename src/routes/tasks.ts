@@ -64,9 +64,15 @@ export async function tasksRoutes(app: FastifyInstance) {
       const { id } = markOrUnmarkTaskAsCompletedParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
 
+      if (!id) {
+        return rep.status(400).send({
+          message: 'id is required.',
+        })
+      }
+
       if (!isUUID(id)) {
         return rep.status(400).send({
-          message: 'id is not a valid UUID',
+          message: 'id is not a valid UUID.',
         })
       }
 
@@ -105,6 +111,12 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       const { id } = deleteTaskParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
+
+      if (!id) {
+        return rep.status(400).send({
+          message: 'id is required.',
+        })
+      }
 
       if (!isUUID(id)) {
         return rep.status(400).send({
