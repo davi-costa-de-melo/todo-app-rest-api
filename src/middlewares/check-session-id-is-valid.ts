@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
+import { isUUID } from '../utils/is-uuid'
 
-export async function checkSessionIdExists(
+export async function checkSessionIdIsValid(
   req: FastifyRequest,
   rep: FastifyReply,
 ) {
@@ -9,6 +10,12 @@ export async function checkSessionIdExists(
   if (!sessionId) {
     return rep.status(401).send({
       message: 'sessionId do not exists.',
+    })
+  }
+
+  if (!isUUID(sessionId)) {
+    return rep.status(401).send({
+      message: 'sessionId is not a valid UUID.',
     })
   }
 }

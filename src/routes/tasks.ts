@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import { knex } from '../database'
 import { randomUUID } from 'node:crypto'
-import { checkSessionIdExists } from '../middlewares/check-session-id-exists'
+import { checkSessionIdIsValid } from '../middlewares/check-session-id-is-valid'
 import { isUUID } from '../utils/is-uuid'
 
 export async function tasksRoutes(app: FastifyInstance) {
@@ -54,7 +54,7 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.patch(
     '/:id',
     {
-      preHandler: [checkSessionIdExists],
+      preHandler: [checkSessionIdIsValid],
     },
     async (req, rep) => {
       const markOrUnmarkTaskAsCompletedParamsSchema = z.object({
@@ -102,7 +102,7 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [checkSessionIdExists],
+      preHandler: [checkSessionIdIsValid],
     },
     async (req, rep) => {
       const deleteTaskParamsSchema = z.object({
@@ -146,7 +146,7 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.delete(
     '/completed',
     {
-      preHandler: [checkSessionIdExists],
+      preHandler: [checkSessionIdIsValid],
     },
     async (req, rep) => {
       const { sessionId } = req.cookies
