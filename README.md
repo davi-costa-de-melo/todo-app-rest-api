@@ -12,7 +12,7 @@ API designed to be used in a simple task application. Soon, this other applicati
 
 - `Delete a task`: You can delete a task by making a request with the DELETE method to "/tasks/:id". "id" in this case is the id of your task. You can only do this with the tasks in your task list, that is, with the tasks that have the information "session_id" equal to your "sessionId" cookie.
 
-- `Delete all done tasks`: You can delete all completed tasks by making a request with the DELETE method to "/tasks/completed". This will only delete the done tasks from your task list, that is, the tasks that have the information "done" equal to **false** and the information "session_id" equal to your "sessionId".
+- `Delete all done tasks`: You can delete all completed tasks by making a request with the DELETE method to "/tasks/completed". This will only delete the done tasks from your task list, that is, the tasks that have the information "done" equal to **true** and the information "session_id" equal to your "sessionId".
 
 ## Technologies Used 🚀
 
