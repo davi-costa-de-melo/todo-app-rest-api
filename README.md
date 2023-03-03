@@ -10,9 +10,9 @@ API designed to be used in a simple task application. Soon, this other applicati
 
 - `PATCH /tasks/:id`: Marks or unmarks a task as done. `id` is the `id` of the task to be updated. If there is any error, it returns a message with the description of the error that occurred.
 
-- `DELETE /tasks/:id`: Deletes a task. `id` is the `id` of the task to be deleted. If there is an error, it returns a message with the description of the error that occurred.
+- `DELETE /tasks/:id`: Deletes a task. `id` is the `id` of the task to be deleted. If there is any error, it returns a message with the description of the error that occurred.
 
-- `DELETE /tasks/completed`: Deletes all tasks that have `session_id` information equal to the `sessionId` cookie sent in the request and `done` information equal to `true`. If there is an error, it returns a message with the description of the error that occurred.
+- `DELETE /tasks/completed`: Deletes all tasks that have `session_id` information equal to the `sessionId` cookie sent in the request and `done` information equal to `true`. If there is any error, it returns a message with the description of the error that occurred.
 
 ## Technologies Used 🚀
 
