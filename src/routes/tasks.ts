@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { knex } from '../database'
 import { randomUUID } from 'node:crypto'
 import { checkSessionIdIsValid } from '../middlewares/check-session-id-is-valid'
-import { isUUID } from '../utils/is-uuid'
+import { checkIdIsValid } from '../middlewares/check-id-is-valid'
 
 export async function tasksRoutes(app: FastifyInstance) {
   app.get('/', async (req) => {
@@ -54,7 +54,7 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.patch(
     '/:id',
     {
-      preHandler: [checkSessionIdIsValid],
+      preHandler: [checkSessionIdIsValid, checkIdIsValid],
     },
     async (req, rep) => {
       const markOrUnmarkTaskAsCompletedParamsSchema = z.object({
@@ -63,18 +63,6 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       const { id } = markOrUnmarkTaskAsCompletedParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
-
-      if (!id) {
-        return rep.status(400).send({
-          message: 'id is required.',
-        })
-      }
-
-      if (!isUUID(id)) {
-        return rep.status(400).send({
-          message: 'id is not a valid UUID.',
-        })
-      }
 
       const task = await knex('tasks')
         .where({
@@ -85,7 +73,7 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       if (!task) {
         return rep.status(404).send({
-          message: 'The record does not exist in the database.',
+          message: 'The task does not exist in the database.',
         })
       }
 
@@ -102,7 +90,7 @@ export async function tasksRoutes(app: FastifyInstance) {
   app.delete(
     '/:id',
     {
-      preHandler: [checkSessionIdIsValid],
+      preHandler: [checkSessionIdIsValid, checkIdIsValid],
     },
     async (req, rep) => {
       const deleteTaskParamsSchema = z.object({
@@ -111,18 +99,6 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       const { id } = deleteTaskParamsSchema.parse(req.params)
       const { sessionId } = req.cookies
-
-      if (!id) {
-        return rep.status(400).send({
-          message: 'id is required.',
-        })
-      }
-
-      if (!isUUID(id)) {
-        return rep.status(400).send({
-          message: 'id is not a valid UUID.',
-        })
-      }
 
       const task = await knex('tasks')
         .where({
@@ -133,7 +109,7 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       if (!task) {
         return rep.status(404).send({
-          message: 'The record does not exist in the database.',
+          message: 'The task does not exist in the database.',
         })
       }
 
