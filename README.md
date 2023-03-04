@@ -1,28 +1,88 @@
-# REST API for TODO APP
+# REST API For Todo App ✅
 
-API designed to be used in a simple task application. Soon, this other application will be developed and we will be able to see both in action. This will be my first FULLSTACK PROJECT!
+REST API designed to be consumed by [this todo app](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW), which I will develop soon. This will be my first FULLSTACK APLICATION!
 
-## Routes ✅
+## How It Works? 🛠️
 
-- `GET /tasks`: Lists all tasks that have `session_id` information equal to the `sessionId` cookie sent in the request. If the `sessionId` cookie is not sent, it returns an empty list.
+In the database, there is only the task table. Each task is represented by an object that contains the following data.
 
-- `POST /tasks`: Creates a task based on the request body. In the body of the request there must be an `object` with the `title` property, which must be a `string`. `title` will be the title of your task. If the `sessionId` cookie is not sent, this cookie is set at creation time and the new task is added to the task list, but if it is sent, the new task is just added to your task list.
+```json
+{
+  "id": "12345678-abcd-abcd-abcd-123456789abc",
+  "session_id": "1234abcd-123e-456f-abcd-abcd123456789",
+  "title": "My task",
+  "done": false
+}
+```
 
-- `PATCH /tasks/:id`: Marks or unmarks a task as done. `id` is the `id` of the task to be updated. If there is any error, it returns a message with the description of the error that occurred.
+- `id`: UUID that identifies the task in the database (primary key).
+- `session_id`: UUID that identifies the session to which the task belongs.
+- `title`: Text that identifies the task's title.
+- `done`: boolean that identifies if the task was done.
 
-- `DELETE /tasks/:id`: Deletes a task. `id` is the `id` of the task to be deleted. If there is any error, it returns a message with the description of the error that occurred.
+When you create a task, a sessionId cookie is set. This cookie is used to identify your tasks in the database. You can only search, update and delete your own tasks.
 
-- `DELETE /tasks/completed`: Deletes all tasks that have `session_id` information equal to the `sessionId` cookie sent in the request and `done` information equal to `true`. If there is any error, it returns a message with the description of the error that occurred.
+If there is an error in sending the data, there will be no update in the database, only a message will be sent with the description of the error that occurred.
 
-## Technologies Used 🚀
+## Routes 🔀
+
+### `GET /tasks`
+
+Returns all your tasks in the response body in the following format.
+
+```json
+{
+  "tasks": [
+    // your tasks here
+  ]
+}
+```
+
+If the sessionId cookie is not set, the tasks property will be an empty list.
+
+### `POST /tasks`
+
+Creates a task according to the information you send in the request body. The information must be in the following format.
+
+```json
+{
+  "title": "New task"
+}
+```
+
+You only need to send the title of your task, any other information will be ignored. If the sessionId cookie is not set, it will be set as soon as you create the task.
+
+### `PATCH /tasks/:id`
+
+Toggles the done information on a specific task. You only need to send the task id as a route parameter.
+
+If the task is not found, no update will be made to the database, only a message will be sent stating that the task does not exist.
+
+**Remember that you can only manipulate your tasks, tasks that do not have session_id information equal to your sessionId cookie will be ignored.**
+
+### `DELETE /tasks/:id`
+
+Deletes a specific task. You only need to send the task id as a route parameter.
+
+If the task is not found, no update will be made to the database, only a message will be sent stating that the task does not exist.
+
+**Remember that you can only manipulate your tasks, tasks that do not have session_id information equal to your sessionId cookie will be ignored.**
+
+### `DELETE /tasks/completed`
+
+Deletes all done tasks. If you don't have done tasks, no updates are made to the database and no error messages are sent.
+
+**Remember that you can only manipulate your tasks, tasks that do not have session_id information equal to your sessionId cookie will be ignored.**
+
+## Technologies Used 👨‍💻
 
 - `nodejs`
 - `fastify`
 - `typescript`
-- `tsx`
-- `knexjs`
 - `zod`
-- `eslint`
+- `knexjs`
 - `sqlite`
 - `vitest`
+- `eslint`
+- `tsx`
 - `tsup`
