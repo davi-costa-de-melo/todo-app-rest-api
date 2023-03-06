@@ -1,6 +1,6 @@
 # REST API For Todo App ✅
 
-REST API designed to be consumed by [this todo app](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW), which I will develop soon. This will be my first FULLSTACK APLICATION!
+REST API designed to be consumed by a simple todo app, which I will develop soon. This will be my first FULLSTACK APLICATION!
 
 ## How It Works? 🛠️
 
