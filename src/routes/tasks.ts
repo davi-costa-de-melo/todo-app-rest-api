@@ -38,7 +38,7 @@ export async function tasksRoutes(app: FastifyInstance) {
 
       rep.cookie('sessionId', sessionId, {
         path: '/',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        expires: new Date(2038, 0),
       })
     }
 
